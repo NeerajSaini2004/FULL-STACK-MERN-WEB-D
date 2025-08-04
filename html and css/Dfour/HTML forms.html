@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms||HTML</title>
+</head>
+<body>
+    <form action="/signup" method="get" target="_blank">
+        <!-- // The action attribute specifies where to send the form-data when a form is submitted.
+        // The method attribute specifies the HTTP method (GET or POST) to be used when sending form-data.
+        // The target attribute specifies where to display the response that is received after submitting the form. -->
+        <fieldset>
+            <!-- //legend is used to provide a caption for the fieldset. -->
+            <legend>Collecting basic data!!!</legend>
+        <!-- // fieldset is used to group related elements in a form, and legend is used to provide a caption for the fieldset. -->
+        <label for="name">Enter your name</label>
+        <!-- //label = input ka naam + click se input activate 😄. -->
+        <!-- // for attribute ek <label> ko kis input field se link karna hai, yeh batata hai.
+            Jab user label pe click karta hai, to us input box me cursor chala jata hai (us input select ho jata hai). -->
+        <input type="text" id="name" name="Name" placeholder="Nerraj " autofocus>
+        <!-- //autofocus = page load hote hi cursor wahi pe chala jaye //cursor seedha is input me blink karega. -->
+         <br>
+         <label for="email">Enter Your email Id:</label>
+         <!-- value = input ka andar ka data ya default text -->
+         
+         <input type="email" name="" id="email" value="abc123@xyz.com">
+         <br>
+         <label for="Username">Username</label>
+         <!-- //readonly = sirf dekh sakte ho, lekin change nahi kar sakte 👁️🚫 -->
+         <input type="text" id="Username" value="love5766" readonly="love5766">
+         <br>
+         Password: <input type="password" name="" id="">
+         
+        <!-- <label for="textarea">Enter you address</label>
+        <textarea name="Text_area" id="textarea" cols="30" rows="5"></textarea> -->
+        <br>
+        <label for="dob">Enter DOB</label>
+        <input type="date" name="dob" id="dob">
+        <br>
+        Enter your age: <input type="number" name="" id="" min="5" max="30">
+        <br>
+        <label for="gender">Select Your gender</label>
+        <label for="gender_male">MALE</label>
+        <input type="radio" name="gender" id="gender_male"  value="Male" >
+        <label for="gender_female">FEMALE</label>
+        <!-- the value of name attribute needs to be same in all rdio options -->
+        <input type="radio" name="gender" id="gender_female" value="FEMALE" >
+        <label for="gender_prefernottosay">Prefer not to say</label>
+        <input type="radio" name="gender" id="gender_prefernottosay" value="Unsaid">
+        <br>
+        <label for="">Selct your favorite fruit</label>
+        <br>
+        <label for="mango">Mango</label>
+        <input type="checkbox" name="mango" id="mango">
+        <br>
+        <label for="banana">Banana</label>
+        <input type="checkbox" name="banana" id="banana">
+        <br>
+        <label for="orange">Orange</label>
+        <input type="checkbox" name="orange" id="orange">
+        <br>
+        <input type="submit" value="Submit form">
+        <input type="reset" value="Reset form">
+
+
+<!-- // fieldset ek HTML tag hota hai jo form ke inputs ko ek group mein dikhane ke liye use hota hai.-->
+      </fieldset>
+   </form>
+</body>
+</html>
