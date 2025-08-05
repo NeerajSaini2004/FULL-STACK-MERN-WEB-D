@@ -8,7 +8,10 @@ newSet.add(2);
 newSet.add(1);
 
 console.log(newSet);
+<<<<<<< HEAD
 //console.log(newSet.has(4)); //
+=======
+>>>>>>> e4be4be41fca79e9ddb9017bc1cd9deb025a68ee
 console.log(newSet.delete(3)); // informs by boolean value if the passed value is deleted or not.
 console.log(newSet);
 
@@ -20,6 +23,7 @@ console.log(arrSet.has(4));
 arrSet.clear();
 console.log(arrSet);
 
+<<<<<<< HEAD
 
 //set difference
 const set1 = new Set([1, 2, 3, 4]);
@@ -28,6 +32,10 @@ const difference = new Set([...set1].filter(x => !set2.has(x)));
 
 // +++++++++++++++++++++++++++++++++++++++ MAP ++++++++++++++++++++++++++++++++++++
 //map is a collection of key-value pairs, where keys can be of any type and values can also be of any type. It remembers the original insertion order of the keys.
+=======
+// +++++++++++++++++++++++++++++++++++++++ MAP ++++++++++++++++++++++++++++++++++++
+
+>>>>>>> e4be4be41fca79e9ddb9017bc1cd9deb025a68ee
 const myMap = new Map();
 myMap.set("name1", "neeraj");
 myMap.set("name2", "saini");
