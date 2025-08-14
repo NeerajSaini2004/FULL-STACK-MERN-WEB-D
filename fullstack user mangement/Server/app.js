@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const databaseConnect = require("./config/db_config");
 const { userRoute } = require("./routers/authRouters");
 require("dotenv").config();
@@ -16,6 +17,10 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+
+// static files serve
+app.use(express.static(path.join(__dirname, "../Client")));
+
 app.use("/", userRoute);
 app.use("/home", (req, res) => {
   res.status(200).json({

@@ -53,8 +53,8 @@ student> db.courses.find();
 student> db.students.insertMany
 (
   [
-    {Name:"Akhilesh", Roll_no: 32, role:"Class Representative", mob_no: 6388976865},
-    {Name: "Deepak Patel", role: "vice CR", isTopper:"yes", mob_no:99457687}
+    {Name:"neerajsaini", Roll_no: 30, role:"Class Representative", mob_no: 97830000000},
+    {Name: "sainisarkar", role: "vice CR", isTopper:"yes", mob_no:97830000000}
   ]
 );
 
@@ -72,29 +72,29 @@ student> db.students.find();
 [
   {
     _id: ObjectId("6485be3c9a63ae60961fb7bd"),
-    Name: 'Abhinav',
+    Name: 'saini',
     Roll_no: 1,
     mob_no: 9519203938
   },
   {
     _id: ObjectId("6485be679a63ae60961fb7be"),
-    Name: 'Sanket',
+    Name: 'mohit',
     Roll_no: 31,
     mob_no: 95193939393
   },
   {
     _id: ObjectId("6485c00b9a63ae60961fb7bf"),
-    Name: 'Akhilesh',
-    Roll_no: 32,
+    Name: 'neerajsaini',
+    Roll_no: 30,
     role: 'Class Representative',
-    mob_no: 6388976865
+    mob_no: 97830000000
   },
   {
     _id: ObjectId("6485c00b9a63ae60961fb7c0"),
-    Name: 'Deepak Patel',
+    Name: 'sainisarkar',
     role: 'vice CR',
     isTopper: 'yes',
-    mob_no: 99457687
+    mob_no: 97830000000
   }
 ]
 
@@ -105,7 +105,7 @@ student> db.students.find();
 student> db.students.findOne();
 {
   _id: ObjectId("6485be3c9a63ae60961fb7bd"),
-  Name: 'Abhinav',
+  Name: 'neerajsaini',
   Roll_no: 1,
   mob_no: 9519203938
 }
@@ -116,30 +116,30 @@ student> db.students.find({ isTopper:"yes"});
 [
   {
     _id: ObjectId("6485c00b9a63ae60961fb7c0"),
-    Name: 'Deepak Patel',
+    Name: 'sainisarkar',
     role: 'vice CR',
     isTopper: 'yes',
-    mob_no: 99457687
+    mob_no: 97830000000
   }
 ]
 
-student> db.students.find({ Roll_no: 32,
+student> db.students.find({ Roll_no: 30,
 ... role: 'Class Representative'});
 [
   {
     _id: ObjectId("6485c00b9a63ae60961fb7bf"),
-    Name: 'Akhilesh',
-    Roll_no: 32,
+    Name: 'neerajsaini',
+    Roll_no: 30,
     role: 'Class Representative',
-    mob_no: 6388976865
+    mob_no: 97830000000
   }
 ]
 
-student> db.students.find({Name:"Abhinav", Roll_no: 1});
+student> db.students.find({Name:"saini", Roll_no: 1});
 [
   {
     _id: ObjectId("6485be3c9a63ae60961fb7bd"),
-    Name: 'Abhinav',
+    Name: 'saini',
     Roll_no: 1,
     mob_no: 9519203938
   }
@@ -149,9 +149,9 @@ student> db.students.find({_id: ObjectId("6485c00b9a63ae60961fb7bf")});
 [
   {
     _id: ObjectId("6485c00b9a63ae60961fb7bf"),
-    Name: 'Akhilesh',
-    Roll_no: 32,
+    Name: 'neerajsaini',
+    Roll_no: 30,
     role: 'Class Representative',
-    mob_no: 6388976865
+    mob_no: 97830000000
   }
 ]
