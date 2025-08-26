@@ -1,0 +1,11 @@
+.card{
+    border:2px solid black;
+    padding: 2rem;
+    width:100px;
+    height:100px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+  background-color: var(--yellow);
+}
