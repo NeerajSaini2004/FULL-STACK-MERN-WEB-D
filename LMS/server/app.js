@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser';
-config();
 import express from 'express';
 import { config } from 'dotenv';
+config();
 import cors from 'cors';
 import morgan from 'morgan';
 import errorMiddleware from './middlewares/error.middleware.js';
@@ -26,6 +26,11 @@ app.use(cookieParser());
 app.get('/ping', (_req, res) => {
   res.send('Pong');
 });
+// Root Route
+app.get("/", (_req, res) => {
+  res.send("🎉 Welcome to LMS API! Server is running fine 🚀");
+});
+
 
 // Import all routes
 import userRoutes from './routes/user.routes.js';

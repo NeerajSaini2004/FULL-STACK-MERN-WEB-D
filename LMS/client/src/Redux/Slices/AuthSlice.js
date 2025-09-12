@@ -3,40 +3,39 @@ import { toast } from "react-hot-toast";
 
 import axiosInstance from "../../Helpers/axiosInstance"
 const initialState = {
-    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true' || false,
     role: localStorage.getItem('role') || "",
-    data: localStorage.getItem('data') != undefined ? JSON.parse(localStorage.getItem('data')) : {}
+    data: (() => {
+        try {
+            const data = localStorage.getItem('data');
+            return data && data !== 'undefined' ? JSON.parse(data) : {};
+        } catch {
+            return {};
+        }
+    })()
 };
 
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     try {
-        const res = axiosInstance.post("user/register", data);
-        toast.promise(res, {
-            loading: "Wait! creating your account",
-            success: (data) => {
-                return data?.data?.message;
-            },
-            error: "Failed to create account"
-        });
-        return (await res).data;
+        const res = await axiosInstance.post("user/register", data);
+        toast.success(res?.data?.message || "Account created successfully");
+        return res.data;
     } catch(error) {
-        toast.error(error?.response?.data?.message);
+        const errorMessage = error?.response?.data?.message || "Failed to create account";
+        toast.error(errorMessage);
+        throw error;
     }
 })
 
 export const login = createAsyncThunk("/auth/login", async (data) => {
     try {
-        const res = axiosInstance.post("user/login", data);
-        toast.promise(res, {
-            loading: "Wait! authentication in progress...",
-            success: (data) => {
-                return data?.data?.message;
-            },
-            error: "Failed to log in"
-        });
-        return (await res).data;
+        const res = await axiosInstance.post("user/login", data);
+        toast.success(res?.data?.message || "Login successful");
+        return res.data;
     } catch(error) {
-        toast.error(error?.response?.data?.message);
+        const errorMessage = error?.response?.data?.message || "Failed to log in";
+        toast.error(errorMessage);
+        throw error;
     }
 });
 
@@ -88,6 +87,14 @@ const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+        .addCase(createAccount.fulfilled, (state, action) => {
+            localStorage.setItem("data", JSON.stringify(action?.payload?.user));
+            localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("role", action?.payload?.user?.role);
+            state.isLoggedIn = true;
+            state.data = action?.payload?.user;
+            state.role = action?.payload?.user?.role
+        })
         .addCase(login.fulfilled, (state, action) => {
             localStorage.setItem("data", JSON.stringify(action?.payload?.user));
             localStorage.setItem("isLoggedIn", true);

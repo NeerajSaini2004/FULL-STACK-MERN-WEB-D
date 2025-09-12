@@ -12,19 +12,35 @@ export const isLoggedIn = asyncHandler(async (req, _res, next) => {
     return next(new AppError("Unauthorized, please login to continue", 401));
   }
 
-  // Decoding the token using jwt package verify method
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    // Decoding the token using jwt package verify method
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
-  // If no decode send the message unauthorized
-  if (!decoded) {
-    return next(new AppError("Unauthorized, please login to continue", 401));
+    // If no decode send the message unauthorized
+    if (!decoded) {
+      return next(new AppError("Unauthorized, please login to continue", 401));
+    }
+
+    // Fetch fresh user data from database to get updated role
+    const User = (await import('../models/user.model.js')).default;
+    const user = await User.findById(decoded.id);
+    
+    if (!user) {
+      return next(new AppError("User not found, please login again", 401));
+    }
+
+    // Store fresh user data with updated role
+    req.user = {
+      id: user._id,
+      role: user.role,
+      subscription: user.subscription
+    };
+
+    // Do not forget to call the next other wise the flow of execution will not be passed further
+    next();
+  } catch (error) {
+    return next(new AppError("Invalid token, please login again", 401));
   }
-
-  // If all good store the id in req object, here we are modifying the request object and adding a custom field user in it
-  req.user = decoded;
-
-  // Do not forget to call the next other wise the flow of execution will not be passed further
-  next();
 });
 
 // Middleware to check if user is admin or not

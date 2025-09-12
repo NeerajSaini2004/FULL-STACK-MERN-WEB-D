@@ -51,7 +51,7 @@ function Signup() {
 
     async function createNewAccount(event) {
         event.preventDefault();
-        if(!signupData.email || !signupData.password || !signupData.fullName || !signupData.avatar) {
+        if(!signupData.email || !signupData.password || !signupData.fullName) {
             toast.error("Please fill all the details");
             return;
         }
@@ -76,7 +76,9 @@ function Signup() {
         formData.append("fullName", signupData.fullName);
         formData.append("email", signupData.email);
         formData.append("password", signupData.password);
-        formData.append("avatar", signupData.avatar);
+        if(signupData.avatar) {
+            formData.append("avatar", signupData.avatar);
+        }
 
         // dispatch create account action
         const response = await dispatch(createAccount(formData));

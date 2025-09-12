@@ -10,15 +10,12 @@ const initialState = {
 
 export const getCourseLectures = createAsyncThunk("/course/lecture/get", async (cid) => {
     try {
-        const response = axiosInstance.get(`/courses/${cid}`);
-        toast.promise(response, {
-            loading: "Fetching course lectures",
-            success: "Lectures fetched successfully",
-            error: "Failed to load the lectures"
-        });
-        return (await response).data;
+        const response = await axiosInstance.get(`/courses/${cid}`);
+        return response.data;
     } catch(error) {
-        toast.error(error?.response?.data?.message);
+        const errorMessage = error?.response?.data?.message || "Failed to load lectures";
+        toast.error(errorMessage);
+        throw error;
     }
 });
 
@@ -29,15 +26,13 @@ export const addCourseLecture = createAsyncThunk("/course/lecture/add", async (d
         formData.append("title", data.title);
         formData.append("description", data.description);
 
-        const response = axiosInstance.post(`/courses/${data.id}`, formData);
-        toast.promise(response, {
-            loading: "adding course lecture",
-            success: "Lecture added successfully",
-            error: "Failed to add the lectures"
-        });
-        return (await response).data;
+        const response = await axiosInstance.post(`/courses/${data.id}`, formData);
+        toast.success("Lecture added successfully");
+        return response.data;
     } catch(error) {
-        toast.error(error?.response?.data?.message);
+        const errorMessage = error?.response?.data?.message || "Failed to add lecture";
+        toast.error(errorMessage);
+        throw error;
     }
 });
 
@@ -67,8 +62,9 @@ const lectureSlice = createSlice({
             state.lectures = action?.payload?.lectures;
         })
         .addCase(addCourseLecture.fulfilled, (state, action) => {
-            console.log(action);
-            state.lectures = action?.payload?.course?.lectures;
+            if(action?.payload?.course?.lectures) {
+                state.lectures = action.payload.course.lectures;
+            }
         })
     }
 });

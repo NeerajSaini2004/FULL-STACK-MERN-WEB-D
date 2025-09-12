@@ -16,18 +16,7 @@ function HomeLayout({ children }) {
     // for displaying the options acc to role
     const role = useSelector((state) => state?.auth?.role);
 
-    function changeWidth() {
-        const drawerSide = document.getElementsByClassName("drawer-side");
-        drawerSide[0].style.width = 'auto';
-    }
 
-    function hideDrawer() {
-        const element = document.getElementsByClassName("drawer-toggle");
-        element[0].checked = false;
-
-        const drawerSide = document.getElementsByClassName("drawer-side");
-        drawerSide[0].style.width = '0';
-    }
 
     async function handleLogout(e) {
         e.preventDefault();
@@ -38,86 +27,102 @@ function HomeLayout({ children }) {
     }
 
     return (
-        <div className="min-h-[90vh]">
-            <div className="drawer absolute left-0 z-50 w-fit">
-                <input className="drawer-toggle" id="my-drawer" type="checkbox" />
-                <div className="drawer-content">
-                    <label htmlFor="my-drawer" className="cursor-pointer relative">
-                        <FiMenu 
-                            onClick={changeWidth}
-                            size={"32px"}
-                            className="font-bold text-white m-4"
-                        />
-                    </label>
-                </div>
-                <div className="drawer-side w-0">
-                    <label htmlFor="my-drawer" className="drawer-overlay">
-                    </label>
-                    <ul className="menu p-4 w-48 h-[100%] sm:w-80 bg-base-200 text-base-content relative">
-                        <li className="w-fit absolute right-2 z-50">
-                            <button onClick={hideDrawer}>
-                                <AiFillCloseCircle size={24} />
-                            </button>
-                        </li>
+        <div className="min-h-screen relative">
+            {/* Menu button */}
+            <div className="fixed top-4 left-4 z-50">
+                <label htmlFor="drawer-toggle" className="btn btn-square btn-ghost bg-base-300">
+                    <FiMenu size={24} />
+                </label>
+            </div>
+            
+            {/* Hidden checkbox for toggle */}
+            <input id="drawer-toggle" type="checkbox" className="hidden" />
+            
+            {/* Sidebar overlay */}
+            <label htmlFor="drawer-toggle" className="sidebar-overlay fixed inset-0 bg-black bg-opacity-60 z-40 opacity-0 pointer-events-none transition-opacity duration-300 cursor-pointer"></label>
+            
+            {/* Sidebar */}
+            <div className="sidebar fixed top-0 left-0 w-80 h-screen bg-gray-900 text-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl">
+                <div className="p-6">
+                    <ul className="space-y-4 mt-8">
                         <li>
-                            <Link to="/">Home</Link>
+                            <Link to="/" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                Home
+                            </Link>
                         </li>
 
                         {isLoggedIn && role === 'ADMIN' && (
                             <li>
-                                <Link to="/admin/dashboard"> Admin DashBoard</Link>
+                                <Link to="/admin/dashboard" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                    Admin Dashboard
+                                </Link>
                             </li>
                         )}
                         {isLoggedIn && role === 'ADMIN' && (
                             <li>
-                                <Link to="/course/create"> Create new course</Link>
+                                <Link to="/course/create" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                    Create New Course
+                                </Link>
                             </li>
                         )}
 
                         <li>
-                            <Link to="/courses">All Courses</Link>
+                            <Link to="/courses" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                All Courses
+                            </Link>
                         </li>
 
                         <li>
-                            <Link to="/contact">Contact Us</Link>
+                            <Link to="/contact" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                Contact Us
+                            </Link>
                         </li>
 
                         <li>
-                            <Link to="/about">About Us</Link>
+                            <Link to="/about" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                About Us
+                            </Link>
                         </li>
 
-                        {!isLoggedIn && (
-                            <li className="absolute bottom-4 w-[90%]">
-                                <div className="w-full flex items-center justify-center">
-                                    <button className='btn-primary px-4 py-1 font-semibold rounded-md w-full'>
-                                        <Link to="/login">Login</Link>
-                                    </button>
-                                    <button className='btn-secondary px-4 py-1 font-semibold rounded-md w-full'>
-                                        <Link to="/signup">Signup</Link>
-                                    </button>
-                                </div>
+                        {isLoggedIn && (
+                            <li>
+                                <Link to="/user/profile" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                    About Profile
+                                </Link>
                             </li>
                         )}
 
                         {isLoggedIn && (
-                            <li className="absolute bottom-4 w-[90%]">
-                                <div className="w-full flex items-center justify-center">
-                                    <button className='btn-primary px-4 py-1 font-semibold rounded-md w-full'>
-                                        <Link to="/user/profile">Profile</Link>
-                                    </button>
-                                    <button className='btn-secondary px-4 py-1 font-semibold rounded-md w-full'>
-                                        <Link onClick={handleLogout}>Logout</Link>
-                                    </button>
-                                </div>
+                            <li>
+                                <Link onClick={handleLogout} className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors cursor-pointer">
+                                    Logout
+                                </Link>
+                            </li>
+                        )}
+
+                        {!isLoggedIn && (
+                            <li>
+                                <Link to="/login" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                    Login
+                                </Link>
+                            </li>
+                        )}
+                        {!isLoggedIn && (
+                            <li>
+                                <Link to="/signup" className="block py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                                    Signup
+                                </Link>
                             </li>
                         )}
                     </ul>
                 </div>
             </div>
-
-            { children }
-
-            <Footer />
+            
+            {/* Main content */}
+            <div className="min-h-screen">
+                {children}
+                <Footer />
+            </div>
         </div>
     );
 }

@@ -116,7 +116,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
     return next(new AppError('Email and Password are required', 400));
   }
 
-  // Finding the user with the sent email
+  // Finding the user with the sent email - get fresh data from DB
   const user = await User.findOne({ email }).select('+password');
 
   // If no user or sent password do not match then send generic response
@@ -126,7 +126,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // Generating a JWT token
+  // Generating a JWT token with current user data (including updated role)
   const token = await user.generateJWTToken();
 
   // Setting the password to undefined so it does not get sent in the response
@@ -269,7 +269,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
     return next(new AppError('Password is required', 400));
   }
 
-  console.log(forgotPasswordToken);
+
 
   // Checking if token matches in DB and if it is still valid(Not expired)
   const user = await User.findOne({

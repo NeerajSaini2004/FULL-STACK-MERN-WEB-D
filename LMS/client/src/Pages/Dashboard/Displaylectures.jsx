@@ -39,14 +39,16 @@ function Displaylectures() {
                     {/* left section for playing videos and displaying course details to admin */}
                    <div className="space-y-5 w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
                         <video 
-                            src={lectures && lectures[currentVideo]?.lecture?.secure_url}
                             className="object-fill rounded-tl-lg rounded-tr-lg w-full"   
                             controls
                             disablePictureInPicture
-                            muted
                             controlsList="nodownload"
-
+                            onError={(e) => console.log('Video error:', e)}
                         >
+                            <source src={lectures && lectures[currentVideo]?.lecture?.secure_url} type="video/mp4" />
+                            <source src={lectures && lectures[currentVideo]?.lecture?.secure_url} type="video/webm" />
+                            <source src={lectures && lectures[currentVideo]?.lecture?.secure_url} type="video/ogg" />
+                            Your browser does not support the video tag.
                         </video>    
                         <div>
                             <h1>

@@ -2,8 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  color-scheme: dark;
+}
+
 body {
   margin: auto;
   max-width: 1440px;
   position: relative;
+  background-color: #1f2937;
+  color: white;
+}
+
+/* Sidebar menu styling */
+.menu li {
+  margin-bottom: 0.5rem;
+}
+
+.menu li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ChatGPT-style sidebar */
+#drawer-toggle:checked ~ .sidebar-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#drawer-toggle:checked ~ .sidebar {
+  transform: translateX(0);
+}
+
+.sidebar {
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
 }
