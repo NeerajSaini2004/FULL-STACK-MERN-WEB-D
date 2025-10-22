@@ -45,19 +45,18 @@ export const verifyUserPayment = createAsyncThunk("/payments/verify", async (dat
     }
 });
 
-export const getPaymentRecord = createAsyncThunk("/payments/record", async () => {
+export const getPaymentRecord = createAsyncThunk("/payments/record", async (_, { rejectWithValue }) => {
     try {
-        const response = axiosInstance.get("/payments?count=100", );
-        toast.promise(response, {
-            loading: "Getting the payment records",
-            success: (data) => {
-                return data?.data?.message
-            },
-            error: "Failed to get payment records"
-        })
-        return (await response).data;
+        const response = await axiosInstance.get("/payments?count=100");
+        return response.data;
     } catch(error) {
-        toast.error("Operation failed");
+        const errorMessage = error?.response?.data?.message || "Failed to get payment records";
+        if (error?.response?.status === 401) {
+            toast.error("Unauthorized access. Admin login required.");
+        } else {
+            toast.error(errorMessage);
+        }
+        return rejectWithValue(errorMessage);
     }
 });
 

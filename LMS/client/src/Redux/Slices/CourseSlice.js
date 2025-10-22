@@ -4,16 +4,19 @@ import { toast } from "react-hot-toast";
 import axiosInstance from "../../Helpers/axiosInstance";
 
 const initialState = {
-    courseData: []
+    courseData: [],
+    loading: false,
+    error: null
 }
 
-export const getAllCourses = createAsyncThunk("/course/get", async () => {
+export const getAllCourses = createAsyncThunk("/course/get", async (_, { rejectWithValue }) => {
     try {
         const response = await axiosInstance.get("/courses");
         return response.data.courses || [];
     } catch(error) {
         console.error('Failed to load courses:', error);
-        return [];
+        toast.error(error?.response?.data?.message || "Failed to load courses");
+        return rejectWithValue(error?.response?.data?.message || "Failed to load courses");
     }
 }); 
 
@@ -57,11 +60,21 @@ const courseSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getAllCourses.fulfilled, (state, action) => {
-            if(action.payload) {
-                state.courseData = [...action.payload];
-            }
-        })
+        builder
+            .addCase(getAllCourses.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getAllCourses.fulfilled, (state, action) => {
+                state.loading = false;
+                state.courseData = action.payload || [];
+                state.error = null;
+            })
+            .addCase(getAllCourses.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || "Failed to load courses";
+                state.courseData = [];
+            })
     }
 });
 

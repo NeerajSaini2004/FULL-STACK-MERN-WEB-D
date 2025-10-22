@@ -20,7 +20,7 @@ function AdminDashboard() {
     const navigate = useNavigate();
     
     const { allUsersCount, subscribedCount } = useSelector((state) => state.stat);
-
+    const { role } = useSelector((state) => state.auth);
     const { allPayments, monthlySalesRecord } = useSelector((state) => state.razorpay);
 
 
@@ -71,10 +71,13 @@ function AdminDashboard() {
             async () => {
                 await dispatch(getAllCourses());
                 await dispatch(getStatsData());
-                await dispatch(getPaymentRecord())
+                // Only fetch payment records if user is admin
+                if (role === 'ADMIN') {
+                    await dispatch(getPaymentRecord());
+                }
             }
         )()
-    }, [])
+    }, [role])
 
     return (
         <HomeLayout>

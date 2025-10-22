@@ -1,6 +1,9 @@
-// we all know that handling asynchronous task without blocking the main thread is very important. However Writing and understanding asynchronous code can be difficult. Asynch ans await are syntax provided to make asynchronous code more readable and in a way that looks and behaves more  line synchronous code.
+// we all know that handling asynchronous task without blocking the main thread is very important. 
+// However Writing and understanding asynchronous code can be difficult.
+//  Asynch ans await are syntax provided to make asynchronous code more readable and in a way that looks and behaves more  line synchronous code.
 
-// witt Asynch/await, we can mark a function as asynchronous using the keywoed "async" and use the "await" keyword to wait for the completion of asynchronous task. this make it easier to read and write asynchronous code as well as handle erroe more effectively.
+// witt Asynch/await, we can mark a function as asynchronous using the keywoed "async" and use the "await" keyword to wait for the completion of asynchronous task.
+//  this make it easier to read and write asynchronous code as well as handle erroe more effectively.
 
 function returnDummyPromise() {
   return new Promise(function exec(resolve, reject) {

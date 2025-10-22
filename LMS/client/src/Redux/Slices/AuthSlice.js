@@ -84,7 +84,15 @@ export const getUserData = createAsyncThunk("/user/details", async () => {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        refreshUserData: (state) => {
+            // Clear cached data to force fresh fetch
+            localStorage.removeItem('data');
+            localStorage.removeItem('role');
+            state.data = {};
+            state.role = "";
+        }
+    },
     extraReducers: (builder) => {
         builder
         .addCase(createAccount.fulfilled, (state, action) => {
@@ -121,5 +129,5 @@ const authSlice = createSlice({
     }
 });
 
-// export const {} = authSlice.actions;
+export const { refreshUserData } = authSlice.actions;
 export default authSlice.reducer;
